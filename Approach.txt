@@ -1,0 +1,116 @@
+Approach
+
+1) Create an input field to enter the city name.
+2) Submit the form using jquery and display the city weater data
+3) Save the data in DB and make sure added a field of last_updated_on in db table
+4) Check if data is modified recently then fetch data from db otherwise call the api
+
+
+check all your code before submitting to them.
+
+
+Link:
+
+1) For Palindrome:
+Link: http://localhost/ci/index.php/PalindromeController/
+
+Description: As suggested, I have created a controller class named as PalindromeController and created a method named as isPalindrome
+to check string is palindrome or not. This method is returning a boolean value. 
+
+a) In this isPalindrome method the logic is as following: 
+
+i)It is fetching the first chararacter and the last chararacter of the string and compare them. 
+ii)Then fetch the second and the second last char and compare them. 
+iii)Repeat the process.
+iv)If chararacters are not matching at any point then breaking the loop.
+         
+b) I have added an entry in routes file.
+
+c) I have added a input field in view file (string_operation.php) in order to take input from user. 
+Also, made a AJAX call to show the result.
+
+I have alert the result.
+
+
+
+File Path:
+
+ci\application\controllers\PalindromeController.php (Controller)
+ci\application\views\palindrome_view.php (View)
+ci\application\config\routes.php (Routes)
+
+
+2) For reverse of string:
+Link: Link: http://localhost/ci/index.php/ReverseStringController
+
+Description: As suggested, created another controller maned as ReverseStringController and created a method named as reverse. 
+This method is taking string as a parameter and returning a string.
+
+File Path:
+
+ci\application\controllers\ReverseStringController.php (Controller)
+ci\application\views\reverse_view.php (View)
+ci\application\config\routes.php (Routes)
+
+
+
+3) For weather informatio of inputted city:
+Link: http://localhost/ci/
+
+i) Created a DB "weather_information". 
+ii) Created a table "city_weather" for storing weather information for city.
+
+Logic for fetching weather info from API:
+
+i) Allowing user to input the city to know the weather info. (ci\application\views\weather.php)
+
+ii) Created a method readWeatherData in controller  class ci\application\controllers\CityController.php. 
+
+iii) This method is taking city as an argument.
+
+iv)and then checking in DB if this city is already present in DB  Then it is checking for on field "last_updated_on", if "last_updated_on" field value is in between current time and current time minus 10 mins 
+then it is returning the city weather informatio from DB, not hittin the weather api.
+
+v) In another condition it is checking if city is present in DB table but "last_updated_on" is not in between the current time and current time minus 10 mins
+then it is fetching data from api (there is a separate function to call weather API named as "callWeatherApi" in the same controller) and updaing the particular city info in DB table.
+
+vi) If inputted city is not present in DB then it is calling the weather API using function "callWeatherApi" and adding a new record for the same.
+
+
+Notes: I am not hitting the weather API on every single user input. If record is present in the table and following the above conditions
+then fetching the data from table otherwise fetching data from API and updating the DB.
+
+File Path:
+ci\application\controllers\WeatherController.php (Controller)
+ci\application\controllers\CityController.php (Controller)
+ci\application\models\City_Model.php (Model)
+ci\application\views\weather.php (View)
+ci\application\config\routes.php (Routes)
+
+
+4) For dependency injection
+
+Link: http://localhost/ci/CityRepository.php
+
+Approach:
+
+File Path:
+
+ci\Database.php (Database class)
+
+ci\CityRepository.php (Injected Database class in constructor of CityRepository class)
+
+
+
+
+
+Database details:
+
+For dependency Injection:
+http://localhost/ci/CityRepository.php
+
+Approach:
+
+File Path:
+
+
